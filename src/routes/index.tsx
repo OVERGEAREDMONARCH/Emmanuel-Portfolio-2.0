@@ -18,6 +18,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [loading, setLoading] = useState(true);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -27,7 +28,10 @@ function Index() {
       setProgress(Math.floor(p));
       if (p >= 100) {
         clearInterval(tick);
-        setTimeout(() => setLoading(false), 350);
+        setTimeout(() => {
+          setIsFadingOut(true);
+          setTimeout(() => setLoading(false), 400);
+        }, 350);
       }
     }, 120);
     return () => clearInterval(tick);
@@ -84,7 +88,7 @@ function Index() {
   return (
     <div className="portfolio">
       {loading && (
-        <div className="boot-screen" aria-hidden="true">
+        <div className={`boot-screen${isFadingOut ? " fade-out" : ""}`} aria-hidden="true">
           <div className="boot-grid" />
           <div className="boot-inner">
             <div className="boot-logo">
@@ -373,7 +377,7 @@ function Index() {
             Send an Email →
           </a>
           <a
-            href="https://github.com/overgearedmonarch"
+            href="https://github.com/OVERGEAREDMONARCH"
             target="_blank"
             rel="noreferrer"
             className="btn-outline"
@@ -388,12 +392,28 @@ function Index() {
           >
             LinkedIn
           </a>
+          <a
+            href="https://www.x.com/overgeared418/"
+            target="_blank"
+            rel="noreferrer"
+            className="btn-outline"
+          >
+            X
+          </a>
+          <a
+            href="https://www.instagram.com/overgeared18/"
+            target="_blank"
+            rel="noreferrer"
+            className="btn-outline"
+          >
+            Instagram
+          </a>
         </div>
       </section>
 
       <footer>
         <div>© 2026 Emmanuel Oladimeji Oladipupo</div>
-        <div>Built with care — no frameworks needed</div>
+        <div>Built with React · Deployed on Cloudflare</div>
       </footer>
     </div>
   );
